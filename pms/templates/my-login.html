@@ -1,0 +1,17 @@
+{% include 'base.html' %}
+
+<h2> Login with your credentials below.</h2>
+
+
+
+<form method="POST" autocomplete="off">
+
+    {% csrf_token %}
+
+    {{form.as_p}}
+
+
+   <input type="submit" value="Submit">
+
+
+</form>

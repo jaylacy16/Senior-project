@@ -1,0 +1,47 @@
+
+{% load static %}
+
+<html>
+
+
+    <head>
+
+        <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}"
+    </head> 
+    
+{% include 'base.html' %}
+
+
+
+<h2>Welcome our Project Mangager!</h2>
+
+<img style="width: 40pc;" src="{% static 'images/Campus.jpg' %}"/> 
+
+
+
+
+<br><br> <br><br>
+
+<a href="{% url 'my-login'%}"> Go to login page.</a>
+
+<br> <br> <br> <br>
+
+
+<a href="{% url 'register'%}"> Register a User.</a>
+
+<br> <br> <br> <br>
+
+
+<a href="{% url 'create-task'%}"> Creat a task here!. </a>
+
+<br> <br> <br> <br>
+
+<a href="{% url 'view-tasks'%}"> View your tasks here. </a>
+
+
+<br> <br> <br>
+
+<script src="{% static 'js/app.js' %}"></script>
+
+
+</html>
