@@ -1,0 +1,61 @@
+{% load static %}
+
+
+
+
+<html>
+
+
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width-device-width, initial-scale=1, maximum-scale=1"/>
+
+    <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/morph/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+
+    <title> Project Manager </title>
+
+</head>
+
+{% include 'base.html' %}
+<br>
+
+<div class="container bg-white shadow-md p-5 form-layout">
+
+<h3> This is your Dashboard!</h3>
+
+
+<hr>
+
+
+<a href="{% url 'create-task'%}">create task</a>
+
+<br><br>
+
+<a href="{% url 'view-tasks'%}">View tasks</a>
+
+<br><br>
+
+<br><br>
+<a href="{% url 'user_search' %}">User Search</a>
+
+
+<br><br>
+<a href="{% url 'create_groups' %}">Create group</a>
+
+
+<br><br>
+
+
+
+<a href="{% url 'user-logout'%}">Log out</a>
+
+
+
+</div>
+
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Search Results</h1>
+    
+
+    <p>Search query: <strong>{{ query }}</strong></p>
+  
+    <h2>Search Results</h2>
+    <ul>
+        {% for result in results %}
+            <li>
+                
+                <strong>{{ result.name }}</strong><br>
+                
+                <a href="{% url 'view_user' result.id %}">View Profile</a>
+            </li>
+        {% empty %}
+            <li>No results found.</li>
+        {% endfor %}
+    </ul>
+    
+    <a href="{% url 'user_search' %}">Back to Search</a>
+</body>
+</html>

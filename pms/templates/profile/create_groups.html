@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Groups</title>
+</head>
+<body>
+    <h1>User Groups</h1>
+    
+    
+    <h2>Create New User Group</h2>
+    <form method="post" action="{% url 'create_group' %}">
+        {% csrf_token %}
+        <label for="group_name">Group Name:</label>
+        <input type="text" id="group_name" name="group_name" required>
+        <button type="submit">Create Group</button>
+    </form>
+    
+    
+    <h2>Existing User Groups</h2>
+    <ul>
+        {% for group in groups %}
+            <li>
+                <strong>{{ group.name }}</strong><br>
+                <!-- Add more group information as needed -->
+                <a href="{% url 'edit_group' group.id %}">Edit</a>
+                <a href="{% url 'delete_group' group.id %}">Delete</a>
+            </li>
+        {% empty %}
+            <li>No user groups found.</li>
+        {% endfor %}
+    </ul>
+    
+    <a href="{% url 'view-task' %}">Back to Task List</a>
+</body>
+</html>

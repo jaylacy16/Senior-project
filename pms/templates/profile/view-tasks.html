@@ -1,0 +1,77 @@
+{% load static %}
+
+
+
+
+<html>
+
+
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width-device-width, initial-scale=1, maximum-scale=1"/>
+
+    <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/morph/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+
+    <title> Project Manager </title>
+
+</head>
+
+{% include 'base.html' %}
+    <br>
+
+    <h3 class="text-center"> My tasks</h3>
+    <hr>
+   <br><br>
+
+    {% for tsk in task%}
+
+    <div class="container bg-white shadow-md p-5 form-layout" style="margin-top:20px;">
+    {{tsk.title}}
+
+    <br><br>
+
+    {{ tsk.content}}
+
+    <br><br>
+
+    <a href="{% url 'update-task' tsk.id%}">Update task</a>
+
+    <br><br>
+
+    <a href="{% url 'delete-task' tsk.id%}">Delete tasks</a>
+
+    </div>
+
+
+    {% endfor %}
+
+
+
+    <hr>
+
+
+
+    <br><br>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
