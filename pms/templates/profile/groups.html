@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Groups</title>
+    <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/morph/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>User Groups</h1>
+
+        <h2>Create New User Group</h2>
+        <form method="post" action="{% url 'create_group' %}">
+            {% csrf_token %}
+            <label for="group_name">Group Name:</label>
+            <input type="text" id="group_name" name="group_name" required>
+            <button type="submit">Create Group</button>
+        </form>
+
+        <h2>Existing User Groups</h2>
+        <ul>
+            {% for group in groups %}
+                <li>
+                    <strong>{{ group.name }}</strong><br>
+                    <a href="{% url 'edit_group' group.id %}">Edit</a>
+                    <a href="{% url 'delete_group' group.id %}">Delete</a>
+                </li>
+            {% empty %}
+                <li>No user groups found.</li>
+            {% endfor %}
+        </ul>
+
+        <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+    </div>
+</body>
+</html>

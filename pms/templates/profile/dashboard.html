@@ -1,61 +1,38 @@
-{% load static %}
-
-
-
-
-<html>
-
-
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-
     <meta charset="utf-8" />
-
-    <meta name="viewport" content="width-device-width, initial-scale=1, maximum-scale=1"/>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <title>Project Manager</title>
     <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/morph/bootstrap.min.css">
-
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-
-    <title> Project Manager </title>
-
+    
 </head>
-
-{% include 'base.html' %}
-<br>
-
-<div class="container bg-white shadow-md p-5 form-layout">
-
-<h3> This is your Dashboard!</h3>
-
-
-<hr>
-
-
-<a href="{% url 'create-task'%}">create task</a>
-
-<br><br>
-
-<a href="{% url 'view-tasks'%}">View tasks</a>
-
-<br><br>
-
-<br><br>
-<a href="{% url 'user_search' %}">User Search</a>
-
-
-<br><br>
-<a href="{% url 'create_groups' %}">Create group</a>
-
-
-<br><br>
-
-
-
-<a href="{% url 'user-logout'%}">Log out</a>
-
-
-
-</div>
-
+<body>
+    {% include 'base.html' %}
+    <div class="container bg-white shadow-md p-5 form-layout">
+        <h3>This is your Dashboard!</h3>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <a href="{% url 'create-task'%}" class="btn btn-primary">Create Task</a>
+            </div>
+            <div class="col-md-6">
+                <a href="{% url 'view-tasks'%}" class="btn btn-info">View Tasks</a>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <a href="{% url 'user_search' %}" class="btn btn-success">User Search</a>
+            </div>
+            <div class="col-md-6">
+                <a href="{% url 'create_groups' %}" class="btn btn-warning">Create Groups</a>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <a href="{% url 'user-logout'%}" class="btn btn-danger">Log out</a>
+            </div>
+        </div>
+    </div>
+</body>
 </html>

@@ -1,17 +1,10 @@
 
 from django.forms import ModelForm
-
-
 from django.contrib.auth.forms import UserCreationForm
-
 from django.contrib.auth.models import User
-
 from django.contrib.auth.forms import AuthenticationForm
 from django.forms.widgets import PasswordInput, TextInput
-
-
 from django import forms
-
 from .models import Task
 
 
@@ -31,12 +24,13 @@ class LoginForm(AuthenticationForm):
     
         
 class UserSearchForm(forms.Form):
-    username = forms.CharField(label='Username')
+    username = forms.CharField(label='Username', max_length=100)
+
 
 class CreateTaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['title', 'description', 'assigned_to', 'due_date']
+        fields = ['title', 'description','assigned_to','due_date']
         
         
         

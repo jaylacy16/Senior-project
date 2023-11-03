@@ -5,7 +5,8 @@ from .models import Group, UserProfile
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User, Group, Permission 
 from .forms import CreateUserForm, LoginForm, CreateTaskForm
-
+from django.contrib.auth.models import Permission
+from django.contrib import messages
 from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate, login
 
@@ -21,23 +22,16 @@ def home(request):
     
     return render(request, 'index.html')
 
-
 def register(request):
-        
-    form = CreateUserForm()
-    
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
-        
         if form.is_valid():
-            
             form.save()
-            
-            return HttpResponse("Your account has been created!")
+            return redirect("dashboard")  
+    else:
+        form = CreateUserForm()
     
-    context ={'form':form}
-    
-    return render(request, 'register.html', context=context)
+    return render(request, 'register.html', {'form': form})
         
          
     
@@ -109,9 +103,10 @@ def createTask(request):
 def viewTask(request):
     
     current_user = request.user.id
-    task = Task.objects.all().filter(user=current_user)
+    tasks = Task.objects.filter(created_by=request.user)
+
     
-    context = {'task': task}
+    context = {'task': Task}
     
     return render(request, 'profile/view-tasks.html', context=context)
     
@@ -167,15 +162,16 @@ def user_logout(request):
     return redirect("")                 
 
 
-def create_groups():
+def create_groups(request):
     group1, created = Group.objects.get_or_create(name='Task Managers')
     group2, created = Group.objects.get_or_create(name='Admins')
 
     task_permissions = Permission.objects.filter(content_type__app_label='todo', codename__startswith='can_')
     group1.permissions.add(*task_permissions)
     
+    return render(request, 'profile/create_groups.html')
     
-create_groups()
+
 
 
 def user_search(request):
@@ -183,11 +179,14 @@ def user_search(request):
         form = UserSearchForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data['username']
+            print(f"Search Query: {username}")
             users = User.objects.filter(username__icontains=username)
-            return render(request, 'user_search_results.html', {'users': users})
+            print(f"Number of Users Found: {users.count()}")
+            return render(request, 'profile/user_search_results.html', {'users': users})
     else:
         form = UserSearchForm()
-    return render(request, 'user_search.html', {'form': form})
+    return render(request, 'profile/user_search.html', {'form': form})
+
 
 
 def create_task(request):
@@ -198,14 +197,27 @@ def create_task(request):
             task.created_by = request.user
             task.save()
             form.save_m2m()  
-            return redirect('task_list')
+            return redirect('profile/view-tasks')
     else:
         form = CreateTaskForm()
-    return render(request, 'create-task.html', {'form': form})
+    return render(request, 'proifle/create-task.html', {'form': form})
 
 
 
 def user_search_results(request):
     
-    return render(request, 'user_search_results.html')
+    return render(request, 'profile/user_search_results.html')
+
+   
     
+def display_groups(request):
+    groups = Group.objects.all()
+    return render(request, 'profile/groups.html', {'groups': groups})
+
+@login_required(login_url='my-login')  
+def edit_group(request, group_id):
+    try:
+        group = Group.objects.get(id=group_id)
+    except Group.DoesNotExist:
+        messages.error
+

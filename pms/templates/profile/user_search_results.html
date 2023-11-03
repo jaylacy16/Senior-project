@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Search Results</title>
+    <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/morph/bootstrap.min.css">
+    
 </head>
 <body>
     <h1>Search Results</h1>
@@ -15,7 +17,7 @@
         {% for result in results %}
             <li>
                 
-                <strong>{{ result.name }}</strong><br>
+                <strong>{{ result.username }}</strong><br>
                 
                 <a href="{% url 'view_user' result.id %}">View Profile</a>
             </li>

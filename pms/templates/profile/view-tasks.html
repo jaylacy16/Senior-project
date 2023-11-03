@@ -1,11 +1,7 @@
 {% load static %}
 
 
-
-
 <html>
-
-
 
 <head>
 
@@ -15,11 +11,12 @@
 
     <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/morph/bootstrap.min.css">
 
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+   
 
     <title> Project Manager </title>
 
 </head>
+
 
 {% include 'base.html' %}
     <br>
@@ -28,7 +25,7 @@
     <hr>
    <br><br>
 
-    {% for tsk in task%}
+    {% for tsk in Task%}
 
     <div class="container bg-white shadow-md p-5 form-layout" style="margin-top:20px;">
     {{tsk.title}}
@@ -50,14 +47,14 @@
 
     {% endfor %}
 
-
+   
 
     <hr>
 
 
 
     <br><br>
-
+    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
 </html>
 
 

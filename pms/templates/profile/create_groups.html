@@ -1,36 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/morph/bootstrap.min.css">
+    
     <meta charset="UTF-8">
     <title>User Groups</title>
 </head>
 <body>
     <h1>User Groups</h1>
     
-    
     <h2>Create New User Group</h2>
-    <form method="post" action="{% url 'create_group' %}">
-        {% csrf_token %}
-        <label for="group_name">Group Name:</label>
-        <input type="text" id="group_name" name="group_name" required>
-        <button type="submit">Create Group</button>
-    </form>
     
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="group_name">Group Name:</label>
+            <input type="text" id="group_name" name="group_name" required class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Create Group</button>
+    </form>
     
     <h2>Existing User Groups</h2>
     <ul>
         {% for group in groups %}
             <li>
                 <strong>{{ group.name }}</strong><br>
-                <!-- Add more group information as needed -->
-                <a href="{% url 'edit_group' group.id %}">Edit</a>
-                <a href="{% url 'delete_group' group.id %}">Delete</a>
+                
+                <a href="{% url 'edit_group' group.id %}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{% url 'delete_group' group.id %}" class="btn btn-sm btn-danger">Delete</a>
             </li>
         {% empty %}
             <li>No user groups found.</li>
         {% endfor %}
     </ul>
     
-    <a href="{% url 'view-task' %}">Back to Task List</a>
+    <a href="{% url 'view-tasks' %}" class="btn btn-secondary">Back to Task List</a>
+    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
 </body>
 </html>

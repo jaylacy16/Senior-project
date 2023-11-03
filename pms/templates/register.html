@@ -6,30 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/morph/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-    <title>Project Manager</title>
+    <title>Project Manager - Registration</title>
 </head>
 <body>
     {% include 'base.html' %}
     <div class="container bg-white shadow-md p-5 form-layout">
-        <h3>Registration page.</h3>
+        <h3>Registration Page</h3>
         <hr>
-        <br>
         <form method="POST" autocomplete="off">
             {% csrf_token %}
-            {{ form.username.label_tag }}
-            {{ form.username }}
-            <br><br>
-            {{ form.email.label_tag }}
-            {{ form.email }}
-            <br><br>
-            {{ form.password1.label_tag }}
-            {{ form.password1 }}
-            <br><br>
-            {{ form.password2.label_tag }}
-            {{ form.password2 }}
-            <br><br>
-            <a class="btn btn-primary navbar-btn" type="button" href="{% url 'register' %}">Register</a>
-            <input type="submit" value="Submit">
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">Username:</label>
+                {{ form.username }}
+
+                <br> <br>
+            </div>
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}">Email:</label>
+                {{ form.email }}
+                <br> <br>
+            </div>
+            <div class="form-group">
+                <label for="{{ form.password1.id_for_label }}">Password:</label>
+                {{ form.password1 }}
+                <br><br>
+            </div>
+            <div class="form-group">
+                <label for="{{ form.password2.id_for_label }}">Confirm Password:</label>
+                {{ form.password2 }}
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">Register</button>
+            </div>
         </form>
     </div>
 </body>
