@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Project Manager</title>
     <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/slate/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    
 </head>
 <body>
     {% include 'base.html' %}
@@ -23,13 +25,12 @@
                 <label for="id_content">Content:</label>
                 {{ form.content }}
             </div>
-            <br><br>
+            <br>
             <input type="submit" value="Submit">
         </form>
     </div>
 </body>
 </html>
-
 
 
 
