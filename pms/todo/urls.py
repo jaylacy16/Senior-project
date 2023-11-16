@@ -36,8 +36,10 @@ urlpatterns = [
     path('user_search_results', views.user_search_results, name='user_search_results'),
     
     path('create_groups', views.create_groups, name='create_groups'),
-   
     
+    path('profile-management', views.profile_management, name="profile-management"),
+   
+    path('delete-account', views.deleteAccount, name="delete-account"),
 
 
     ]

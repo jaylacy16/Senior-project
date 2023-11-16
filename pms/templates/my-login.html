@@ -4,20 +4,95 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Project Manager</title>
+    <title>Project Manager - Login</title>
     <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/slate/bootstrap.min.css">
-    
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <style>
+      
+
+        .container {
+            margin-top: 40px;
+        }
+
+        .login-form {
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        h3 {
+            font-size: 28px;
+            color: #004080; /* Dark blue color */
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .login-link {
+            color: #007bff; /* Blue color for links */
+            font-weight: bold; /* Bold link text */
+        }
+
+        .login-link:hover {
+            text-decoration: underline;
+        }
+
+        .btn-primary {
+            background-color: #007bff; /* Blue color for the submit button */
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    </style>
 </head>
+{%include 'pre-base.html'%}
 <body>
-    {% include 'base.html' %}
-    <div class="container bg-white shadow-md p-5 form-layout">
-        <h3>Login</h3>
-        <hr>
-        <form method="POST" autocomplete="off">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" class="btn btn-primary" value="Submit">
-        </form>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 login-form">
+                <h3>Login</h3>
+                <hr>
+                <form method="POST" autocomplete="off">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="mb-3">
+                        <p><strong>Don't have an account?</strong> <a href="{% url 'register' %}" class="login-link"><strong>Register here!</strong></a></p>
+                    </div>
+                    <br><br>
+
+                    {% for message in messages%}
+
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS%}
+
+                       <p id="message-timer" class="alert alert-green  float-center text-center"> {{message}} </p>
+
+                    {% endif %}
+
+                    {% endfor %}
+
+                    <input type="submit" class="btn btn-primary" value="Submit">
+                </form>
+            </div>
+        </div>
     </div>
 </body>
+
+<script src="{% static 'js/app.js' %}"></script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+
+<script src="https://stackpath.bootsstrapcdn.com/bootstarp/4.5.0/js/bootstarp.min.js"
+
+intergrity="sha384-OgVRvuATP1z7JjHlkuOu7Xw704+6QL9UvYjZE3Ipu6Tp75j78h/kR0JKI"
+
+crossorigin="anonymous">
+
+</script>
+
+
+
+
+
 </html>

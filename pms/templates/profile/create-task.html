@@ -5,32 +5,60 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Project Manager</title>
+    <title>Project Manager - Create a Task</title>
     <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/slate/bootstrap.min.css">
-    
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
 </head>
 <body>
-    {% include 'base.html' %}
-    <div class="container bg-white shadow-md p-5 form-layout">
-        <h3>Create a Task</h3>
-        <hr>
-        <form method="POST" autocomplete="off">
-            {% csrf_token %}
-            <div>
-                <label for="id_title">Title:</label>
-                {{ form.title }}
+    {% include 'profile/base.html' %}
+    
+    <div class="container mt-5"  style="margin-top:40px;">
+        <div class="card shadow p-5 form-layout">
+            <h3 class="mb-4">Create a Task</h3>
+            <hr>
+
+            <form method="POST" autocomplete="off">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label for="id_title" class="form-label">Title:</label>
+                    {{ form.title }}
+                </div>
+                
+
+                <div class="mb-3">
+                    <label for="id_context" class="form-label">Context:</label>
+                    {{ form.context }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_due_date" class="form-label">Due Date:</label>
+                    {{ form.due_date }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_created_by" class="form-label">Created By:</label>
+                    {{ form.created_by }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_assigned_to" class="form-label">Assigned To:</label>
+                    {{ form.assigned_to }}
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-3">Create!</button>
+
+                <br>
+                <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
             </div>
-            <br><br>
-            <div>
-                <label for="id_content">Content:</label>
-                {{ form.content }}
-            </div>
-            <br>
-            <input type="submit" value="Submit">
-        </form>
+            </form>
+        </div>
     </div>
 </body>
 </html>
+
+
+
 
 
 

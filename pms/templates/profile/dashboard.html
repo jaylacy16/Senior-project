@@ -3,36 +3,45 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-    <title>Project Manager</title>
+    <title>Project Manager Dashboard</title>
     <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/slate/bootstrap.min.css">
-    
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa; /* Light gray background color */
+        }
+
+        .container {
+            margin-top: 40px;
+        }
+
+        .dashboard-header {
+            font-size: 36px;
+            color: #004080; /* Dark blue color */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-content {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #555; /* Dark gray text color */
+        }
+
+        hr {
+            border-color: #ccc; /* Light gray border color */
+        }
+    </style>
 </head>
 <body>
-    {% include 'base.html' %}
+    {% include 'profile/base.html' %}
     <div class="container bg-white shadow-md p-5 form-layout">
-        <h3>This is your Dashboard!</h3>
+        <h3 class="dashboard-header">Welcome to Your Project Manager Dashboard!</h3>
         <hr>
-        <div class="row">
-            <div class="col-md-6">
-                <a href="{% url 'create-task'%}" class="btn btn-primary">Create Task</a>
-            </div>
-            <div class="col-md-6">
-                <a href="{% url 'view-tasks'%}" class="btn btn-info">View Tasks</a>
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-6">
-                <a href="{% url 'user_search' %}" class="btn btn-success">User Search</a>
-            </div>
-            <div class="col-md-6">
-                <a href="{% url 'create_groups' %}" class="btn btn-warning">Create Groups</a>
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-6">
-                <a href="{% url 'user-logout'%}" class="btn btn-danger">Log out</a>
-            </div>
-        </div>
+        <p class="dashboard-content">Start managing your projects with ease- <br> Stay organized and track your progress efficiently using our project manager application!</p>
+        <br>
+      
     </div>
 </body>
 </html>

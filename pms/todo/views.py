@@ -4,15 +4,14 @@ from .forms import UserSearchForm
 from .models import Group, UserProfile
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User, Group, Permission 
-from .forms import CreateUserForm, LoginForm, CreateTaskForm
+from .forms import CreateUserForm, LoginForm, CreateTaskForm, UpdateUserForm
 from django.contrib.auth.models import Permission
 from django.contrib import messages
 from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate, login
-
 from django.contrib.auth.decorators import login_required
-
-from . models import Task
+from .models import Task
+from django.contrib import messages 
 
     
 
@@ -27,7 +26,8 @@ def register(request):
         form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("dashboard")  
+            messages.success(request, "User registraion was successful!")
+            return redirect("my-login")  
     else:
         form = CreateUserForm()
     
@@ -70,6 +70,38 @@ def dashboard(request):
      return render(request, 'profile/dashboard.html')  
  
  
+@login_required(login_url='my-login')
+def profile_management(request):
+    
+    if request.method == 'POST':
+        
+        user_form = UpdateUserForm(request.POST, instance=request.user)
+
+        if user_form.is_valid():
+            
+            user_form.save()
+            
+            return redirect('dashboard')
+      
+    user_form = UpdateUserForm(instance=request.user)
+            
+    context = {'user_form': user_form}
+     
+    return render(request, 'profile/profile-management.html', context=context)       
+
+@login_required(login_url='my-login')
+def deleteAccount(request):
+    if request.method == 'POST':
+        
+        
+        deleteUser = User.objects.get(username=request.user)
+        
+        deleteUser.delete()
+        
+        return redirect('')
+    
+    return render(request, 'profile/delete-account.html')
+
 
 
 @login_required(login_url='my-login')
@@ -94,26 +126,37 @@ def createTask(request):
 
     context = {'form': form}
 
-    return render(request,'profile/create-task.html', context=context)    
+    return render(request,'profile/create-task.html', context=context)   
+
+def create_task(request):
+    if request.method == 'POST':
+        form = CreateTaskForm(request.POST)
+        if form.is_valid():
+            task = form.save(commit=False)
+            task.created_by = request.user
+            task.save()
+            form.save_m2m()  
+            
+            return redirect('profile/view-tasks')
+    else:
+        form = CreateTaskForm()
+    return render(request, 'proifle/view-tasks.html', {'form': form}) 
    
                  
 
 
 @login_required(login_url='my-login')
 def viewTask(request):
-    
     current_user = request.user.id
-    tasks = Task.objects.filter(created_by=request.user)
-
-    
-    context = {'task': Task}
+    tasks = Task.objects.filter(created_by=current_user)
+    context = {'tasks': tasks}
     
     return render(request, 'profile/view-tasks.html', context=context)
     
     
     
 @login_required(login_url='my-login')
-def updateTask(request,pk):
+def updateTask(request, pk):
     
     task = Task.objects.get(id=pk)
     
@@ -187,20 +230,6 @@ def user_search(request):
         form = UserSearchForm()
     return render(request, 'profile/user_search.html', {'form': form})
 
-
-
-def create_task(request):
-    if request.method == 'POST':
-        form = CreateTaskForm(request.POST)
-        if form.is_valid():
-            task = form.save(commit=False)
-            task.created_by = request.user
-            task.save()
-            form.save_m2m()  
-            return redirect('profile/view-tasks')
-    else:
-        form = CreateTaskForm()
-    return render(request, 'proifle/create-task.html', {'form': form})
 
 
 

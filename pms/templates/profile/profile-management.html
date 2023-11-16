@@ -1,0 +1,64 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Project Manager - Update Profile</title>
+    <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/slate/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    {% include 'profile/base.html' %}
+    
+    <div class="container mt-5" style="margin-top:40px;">
+        <div class="card shadow p-5 form-layout">
+            <h3 class="mb-4">Update Your Profile</h3>
+            <hr>
+
+            <form method="POST" autocomplete="off">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label for="id_title" class="form-label">Name:</label>
+                    {{ user_form.username }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_context" class="form-label">Email:</label>
+                    {{ user_form.email }}
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-3">Update</button>
+
+                <br><br>
+                <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+            </form>
+        </div>
+    </div>
+
+    <div class="container mt-5" style="margin-top:40px;">
+        <h3> Delete account </h3>
+        <a href="{% url 'delete-account' %}" class="btn btn-danger">Delete Account</a>
+        <hr>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

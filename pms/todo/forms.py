@@ -30,11 +30,22 @@ class UserSearchForm(forms.Form):
 class CreateTaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['title', 'description','assigned_to','due_date']
+        fields = ['title', 'context','due_date','created_by','assigned_to']
         
         
         
-
+class UpdateUserForm(forms.ModelForm): 
+    
+    password = None
+    
+    class Meta:
+        
+        model = User
+        fields = ['username', 'email',]
+        exclude = ['password1', 'password2',]
+        
+        
+      
 
 
 

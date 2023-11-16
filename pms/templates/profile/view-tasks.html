@@ -1,68 +1,74 @@
-{% load static %}
-
-
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-
-    <meta charset="utf-8" />
-
-    <meta name="viewport" content="width-device-width, initial-scale=1, maximum-scale=1"/>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>View Tasks</title>
     <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/slate/bootstrap.min.css">
-    
-   
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            font-size: 18px;
+            line-height: 1.6;
+            color: #333;
+        }
 
-    <title> Project Manager </title>
+        h3 {
+            font-size: 28px;
+            color: #004080; /* Dark blue color */
+        }
 
+        strong {
+            font-weight: bold;
+            color: #0066cc; /* Medium blue color */
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 40px; /* Adjusted for a larger break between tasks */
+        }
+
+        .btn {
+            font-size: 16px;
+        }
+    </style>
 </head>
-
-
-{% include 'base.html' %}
-    <br>
-
-    <h3 class="text-center"> My tasks</h3>
-    <hr>
-   <br><br>
-
-    {% for tsk in Task%}
-
-    <div class="container bg-white shadow-md p-5 form-layout" style="margin-top:20px;">
-    {{tsk.title}}
-
-    <br><br>
-
-    {{ tsk.content}}
-
-    <br><br>
-
-    <a href="{% url 'update-task' tsk.id%}">Update task</a>
-
-    <br><br>
-
-    <a href="{% url 'delete-task' tsk.id%}">Delete tasks</a>
-
+<body>
+    {% include 'profile/base.html' %}
+    <div class="container bg-white shadow-md p-5 form-layout" style="margin-top: 40px;">
+        <h3 class="text-center"> Your Tasks</h3>
+        <hr>
+        <ul>
+            {% for task in tasks %}
+                <li>
+                    <strong>Title:</strong> {{ task.title }}
+                    <br>
+                    <strong>Context:</strong> {{ task.context }}
+                    <br>
+                    <strong>Created By:</strong> {{ task.created_by }}
+                    <br>
+                    <strong>Assigned To:</strong> {{ task.assigned_to.all|join:", " }}
+                    <br>
+                    <strong>Due Date:</strong> {{ task.due_date }}
+                    <br>
+                    <strong>Date Posted:</strong> {{ task.date_posted }}
+                    <br>
+                    <a href="{% url 'update-task' task.id %}" class="btn btn-primary">Update task</a>
+                    <a href="{% url 'delete-task' task.id %}" class="btn btn-danger">Delete task</a>
+                </li>
+                <hr>
+            {% endfor %}
+        </ul>
+        <br>
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
     </div>
-
-
-    {% endfor %}
-
-   
-
-    <hr>
-
-
-
-    <br><br>
-    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+</body>
 </html>
-
-
-
-
-
-
-
 
 
 
