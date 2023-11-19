@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .forms import UserSearchForm
-from .models import Group, UserProfile
+from .forms import UpdateProfileForm, UserSearchForm
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User, Group, Permission 
 from .forms import CreateUserForm, LoginForm, CreateTaskForm, UpdateUserForm
@@ -10,7 +9,7 @@ from django.contrib import messages
 from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from .models import Task
+from .models import Task, Profile
 from django.contrib import messages 
 
     
@@ -23,9 +22,16 @@ def home(request):
 
 def register(request):
     if request.method == 'POST':
+        
         form = CreateUserForm(request.POST)
+        
         if form.is_valid():
+            current_user = form.save(commit=False) 
+            
             form.save()
+            
+            profile = Profile.objects.create(user=current_user)
+            
             messages.success(request, "User registraion was successful!")
             return redirect("my-login")  
     else:
@@ -66,28 +72,41 @@ def my_login(request):
 @login_required(login_url='my-login')
 def dashboard(request):
     
-   
-     return render(request, 'profile/dashboard.html')  
+    profile_pic = Profile.objects.get(user=request.user)
+    
+    context = {'profile': profile_pic}
+    
+  
+    return render(request, 'profile/dashboard.html', context=context)  
+  
  
- 
+
+
 @login_required(login_url='my-login')
 def profile_management(request):
     
+    user_form = UpdateUserForm(instance=request.user)
+    profile = Profile.objects.get(user=request.user)
+    form_2 = UpdateProfileForm(instance=profile)
+    
     if request.method == 'POST':
-        
         user_form = UpdateUserForm(request.POST, instance=request.user)
+        form_2 = UpdateProfileForm(request.POST, request.FILES, instance=profile)
 
         if user_form.is_valid():
-            
             user_form.save()
-            
             return redirect('dashboard')
-      
-    user_form = UpdateUserForm(instance=request.user)
+        
+        if form_2.is_valid():
+            form_2.save()
+            return redirect('dashboard')
             
-    context = {'user_form': user_form}
-     
-    return render(request, 'profile/profile-management.html', context=context)       
+    context = {'user_form': user_form, 'form_2': form_2}
+    return render(request, 'profile/profile-management.html', context=context)
+    
+
+
+
 
 @login_required(login_url='my-login')
 def deleteAccount(request):

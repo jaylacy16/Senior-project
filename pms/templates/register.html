@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/slate/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
-  
+    <link rel="stylesheet" type= "text/css" href="{% static 'css/styles.css' &}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Project Manager - Registration</title>
 
     <style>
@@ -24,14 +25,14 @@
 
         h3 {
             font-size: 28px;
-            color: #004080; /* Dark blue color */
+            color: #004080; 
             margin-bottom: 20px;
             text-align: center;
         }
 
         label {
             font-size: 18px;
-            font-weight: bold; /* Bold label text */
+            font-weight: bold; 
         }
 
         .condition-text {
@@ -41,8 +42,8 @@
 
         .login-link {
             font-size: 16px;
-            color: #007bff; /* Blue color for links */
-            font-weight: bold; /* Bold link text */
+            color: #007bff; 
+            font-weight: bold; 
         }
 
         .login-link:hover {
@@ -56,6 +57,7 @@
         <div class="row justify-content-center">
             <div class="col-md-6 registration-form">
                 <h3><strong>Registration Page</strong></h3>
+                <i class="fa fa-skyatlas" style="font-size:48px;color:red"></i>
                 <hr>
                 <form method="POST" autocomplete="off">
                     {% csrf_token %}

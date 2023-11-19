@@ -1,11 +1,11 @@
-# todo/models.py
+
 from django.db import models
 from django.contrib.auth.models import User
 
 class Task(models.Model):
     title = models.CharField(max_length=200)
     context = models.CharField(max_length=100, default='')
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, max_length=10, on_delete=models.CASCADE, null=True)
     due_date = models.DateTimeField()
     assigned_to = models.ManyToManyField(User, related_name='assigned_tasks')
     due_date = models.DateField(null=True, blank=True)
@@ -21,6 +21,10 @@ class UserProfile(models.Model):
     groups = models.ManyToManyField(Group, related_name='members')
 
 
+class Profile(models.Model):
+    
+    profile_pic = models.ImageField(null=True, blank=True, default='lakers_stadium.jpg')
+    user = models.ForeignKey(User, max_length=10, on_delete=models.CASCADE, null=True)
     
     
     

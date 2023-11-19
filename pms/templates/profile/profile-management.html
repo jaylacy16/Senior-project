@@ -37,9 +37,24 @@
             </form>
         </div>
     </div>
-
+    <br>
     <div class="container mt-5" style="margin-top:40px;">
-        <h3> Delete account </h3>
+        <h3> Update your Profile picture! </h3>
+        <<form method="POST" autocomplete="off" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            {{ form_2 }}
+            <br>
+        
+            <button type="submit" class="btn btn-primary mt-3">Update profile picture</button>
+        
+            <br><br>
+        </form>
+        <hr>
+    </div>
+    <br>
+    <div class="container mt-5" style="margin-top:40px;">
+        <h3> Do you want to delete your account click here! </h3>
         <a href="{% url 'delete-account' %}" class="btn btn-danger">Delete Account</a>
         <hr>
     </div>

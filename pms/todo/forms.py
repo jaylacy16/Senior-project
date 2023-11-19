@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from django.forms.widgets import PasswordInput, TextInput
 from django import forms
-from .models import Task
+from .models import Task, Profile
 
 
 
@@ -30,7 +30,7 @@ class UserSearchForm(forms.Form):
 class CreateTaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['title', 'context','due_date','created_by','assigned_to']
+        fields = ['title', 'context','due_date','user','assigned_to']
         
         
         
@@ -44,7 +44,11 @@ class UpdateUserForm(forms.ModelForm):
         fields = ['username', 'email',]
         exclude = ['password1', 'password2',]
         
-        
+class UpdateProfileForm(forms.ModelForm):
+    profile_pic = forms.ImageField(widget=forms.FileInput(attrs={'class':'form-control-file'}))
+    class Meta:
+         model = Profile
+         fields = ['profile_pic',]
       
 
 

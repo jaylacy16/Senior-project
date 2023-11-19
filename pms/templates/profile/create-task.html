@@ -34,6 +34,7 @@
                 <div class="mb-3">
                     <label for="id_due_date" class="form-label">Due Date:</label>
                     {{ form.due_date }}
+                    <p> please type the due date in the format "Month day, year".</p>
                 </div>
 
                 <div class="mb-3">
@@ -48,7 +49,7 @@
 
                 <button type="submit" class="btn btn-primary mt-3">Create!</button>
 
-                <br>
+                <br><br>
                 <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
             </div>
             </form>
