@@ -23,7 +23,7 @@ class UserProfile(models.Model):
 
 class Profile(models.Model):
     
-    profile_pic = models.ImageField(null=True, blank=True, default='lakers_stadium.jpg')
+    profile_pic = models.ImageField(null=True, blank=True, upload_to="images/", default='default.jpg')
     user = models.ForeignKey(User, max_length=10, on_delete=models.CASCADE, null=True)
     
     

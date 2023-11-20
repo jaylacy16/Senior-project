@@ -13,9 +13,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-z(8%hm5(1if3=p77eb+6wc&g_ec)w#qc6l4w1kq2nv3m$iqzsc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['senior-project1.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'todo',
+    'storages',
     
     
 ]
@@ -37,6 +38,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -70,10 +72,32 @@ WSGI_APPLICATION = 'pms.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+#sqlliteold database
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+'''
+
+DATABASES ={
+    
+    'default':
+       
+        {
+        'ENGINE': 'django.db.backends.postgresql',
+            
+        'NAME': 'project',
+            
+        'USER': 'Senior',
+            
+        'PASSWORD': 'Jdl123456.',
+            
+        'HOST': 'database-1.cszs83tgweal.us-east-2.rds.amazonaws.com',
+            
+        'PORT': '5432',
     }
 }
 
@@ -125,3 +149,21 @@ MEDIA_ROOT = BASE_DIR / 'static/images'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
+
+
+
+AWS_ACCESS_KEY_ID = "AKIATAR4B5LDWIBO2N4J"
+
+AWS_SECRET_ACCESS_KEY = "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"
+
+AWS_STORAGE_BUCKET_NAME = "mybucket-senior-23"
+
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+STATICFILES_STORAGE ="storages.backends.s3boto3.S3Boto3Storage"
+
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+ 
