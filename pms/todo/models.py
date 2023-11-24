@@ -8,7 +8,6 @@ class Task(models.Model):
     user = models.ForeignKey(User, max_length=10, on_delete=models.CASCADE, null=True)
     due_date = models.DateTimeField()
     assigned_to = models.ManyToManyField(User, related_name='assigned_tasks')
-    due_date = models.DateField(null=True, blank=True)
     date_posted = models.DateTimeField(auto_now_add=True, null=True)
    
     

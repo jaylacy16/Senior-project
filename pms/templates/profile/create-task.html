@@ -34,17 +34,19 @@
                 <div class="mb-3">
                     <label for="id_due_date" class="form-label">Due Date:</label>
                     {{ form.due_date }}
-                    <p> please type the due date in the format "Month day, year".</p>
+                    <p> Please type the due date in the format "Month day, year".</p>
                 </div>
 
                 <div class="mb-3">
                     <label for="id_created_by" class="form-label">Created By:</label>
-                    {{ form.created_by }}
+                    {{ form.user }}
+                    <p> Select the user who created this task.</p>
                 </div>
 
                 <div class="mb-3">
                     <label for="id_assigned_to" class="form-label">Assigned To:</label>
                     {{ form.assigned_to }}
+                    <p> Select the user(s) to whom this task is assigned.</p>
                 </div>
 
                 <button type="submit" class="btn btn-primary mt-3">Create!</button>
@@ -57,15 +59,6 @@
     </div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
 
 
 

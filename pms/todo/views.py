@@ -152,7 +152,7 @@ def create_task(request):
         form = CreateTaskForm(request.POST)
         if form.is_valid():
             task = form.save(commit=False)
-            task.created_by = request.user
+            task.user= request.user
             task.save()
             form.save_m2m()  
             
@@ -167,7 +167,7 @@ def create_task(request):
 @login_required(login_url='my-login')
 def viewTask(request):
     current_user = request.user.id
-    tasks = Task.objects.filter(created_by=current_user)
+    tasks = Task.objects.filter(user=current_user)
     context = {'tasks': tasks}
     
     return render(request, 'profile/view-tasks.html', context=context)
