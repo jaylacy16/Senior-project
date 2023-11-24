@@ -1,3 +1,4 @@
+from datetime import timezone
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .forms import UpdateProfileForm, UserSearchForm
@@ -73,6 +74,7 @@ def my_login(request):
 def dashboard(request):
     
     profile_pic = Profile.objects.get(user=request.user)
+    
     
     context = {'profile': profile_pic}
     
