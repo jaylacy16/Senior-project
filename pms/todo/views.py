@@ -12,8 +12,9 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from .models import Task, Profile
 from django.contrib import messages 
-
-    
+from .forms import SendMessageForm
+from .models import Message    
+from django.http import JsonResponse
 
 def home(request):
     
@@ -169,51 +170,48 @@ def create_task(request):
 @login_required(login_url='my-login')
 def viewTask(request):
     current_user = request.user.id
-    tasks = Task.objects.filter(user=current_user)
+    tasks = Task.objects.filter(user=request.user) | Task.objects.filter(assigned_to=request.user)
     context = {'tasks': tasks}
     
     return render(request, 'profile/view-tasks.html', context=context)
     
     
     
-@login_required(login_url='my-login')
 def updateTask(request, pk):
-    
     task = Task.objects.get(id=pk)
     
-    form = CreateTaskForm(instance=task)
-    
-    if request.method == 'POST':
+    # Check if the task belongs to the currently logged-in user or if the user is assigned to the task
+    if task.user == request.user or task.assigned_to == request.user:
+        form = CreateTaskForm(instance=task)
         
-        form = CreateTaskForm(request.POST, instance=task)
-        
-        if form.is_valid():
-           
-            form.save()
+        if request.method == 'POST':
+            form = CreateTaskForm(request.POST, instance=task)
             
-            return redirect('view-tasks')
+            if form.is_valid():
+                form.save()
+                return redirect('view-tasks')
         
-    context = {'form': form}
-    
-    return render(request,'profile/update-task.html', context=context) 
-
-
+        context = {'form': form}
+        return render(request, 'profile/update-task.html', context=context)
+    else:
+        # Handle the case where the user is not allowed to update the task
+        messages.error(request, "You do not have permission to update this task.")
+        return redirect('view-tasks')
 
 
 def deleteTask(request, pk):
-    
     task = Task.objects.get(id=pk)
     
-    if request.method =='POST':
-        
-        task.delete()
-        
+    # Check if the task belongs to the currently logged-in user
+    if task.user == request.user:
+        if request.method == 'POST':
+            task.delete()
+            return redirect('view-tasks')
+        return render(request, 'profile/delete-task.html', {'task': task})
+    else:
+        # Handle the case where the user is not allowed to delete the task
+        messages.error(request, "You do not have permission to delete this task.")
         return redirect('view-tasks')
-    
-    
-    return render(request, 'profile/delete-task.html')
-    
-    
     
     
     
@@ -271,3 +269,31 @@ def edit_group(request, group_id):
     except Group.DoesNotExist:
         messages.error
 
+
+
+@login_required(login_url='my-login')
+def chatfeed(request):
+   
+    messages = Message.objects.filter(sender=request.user) | Message.objects.filter(receiver=request.user)
+    
+   
+    form = SendMessageForm(user=request.user)
+    
+    if request.method == 'POST':
+       
+        form = SendMessageForm(request.POST, user=request.user)
+        if form.is_valid():
+          
+            message = form.save(commit=False)
+            message.sender = request.user
+            message.save()
+            
+           
+            return JsonResponse({
+                'content': message.content,
+                'sender': message.sender.username,
+                'timestamp': message.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
+            })
+
+   
+    return render(request, 'profile/chatfeed.html', {'messages': messages, 'form': form})

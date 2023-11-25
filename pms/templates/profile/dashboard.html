@@ -39,23 +39,34 @@
         hr {
             border-color: #ccc;
         }
+
+        #clock {
+            font-size: 24px;
+            color: #004080;
+            text-align: right;
+            margin-top: 10px;
+            margin-right: 20px;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        #calendar {
+            margin-top: 20px;
+        }
     </style>
 </head>
 
 <body>
     {% include 'profile/base.html' %}
-    <img style="width: 200px;" src="{{profile.profile_pic.url}}"/>
     <div class="container bg-white shadow-md p-5 form-layout">
         <h3 class="dashboard-header">Welcome to Your Project Manager Dashboard!</h3>
         <hr>
+        <img style="width: 200px;" src="{{profile.profile_pic.url}}" />
+        <p class="dashboard-content">Start managing your projects with ease. <br> Stay organized and track your progress efficiently using our project manager application!</p>
+        <div id="clock"></div>
         <div id="calendar"></div>
-        <p class="dashboard-content">Start managing your projects with ease- <br> Stay organized and track your progress efficiently using our project manager application!</p>
-        <br>
-        
-        <div id="clock" class="dashboard-content"></div>
-
         <script>
-            
             $(document).ready(function () {
                 $('#calendar').fullCalendar({
                     header: {
@@ -73,15 +84,13 @@
                 });
             });
 
-            
             function updateClock() {
                 var now = moment();
-                $('#clock').text(now.format('HH:mm:ss'));
+                $('#clock').text(now.format('hh:mm:ss A'));
             }
 
-            
-            updateClock(); 
-            setInterval(updateClock, 1000); 
+            updateClock();
+            setInterval(updateClock, 1000);
         </script>
     </div>
 </body>

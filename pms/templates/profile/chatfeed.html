@@ -1,0 +1,120 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Project Manager - Chat Feed</title>
+    <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/slate/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <style>
+        .message-container {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .message {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+        }
+
+        .message p {
+            margin: 0;
+            font-size: 16px;
+            line-height: 1.6;
+            font-weight: bold;
+        }
+
+        .user-info {
+            margin-bottom: 5px;
+        }
+
+        .badge-primary {
+            background-color: #007bff;
+        }
+
+        .badge-secondary {
+            background-color: #6c757d;
+        }
+    </style>
+</head>
+
+<body>
+    {% include 'profile/base.html' %}
+    <div class="container bg-white shadow-md p-5 form-layout" style="margin-top: 40px;">
+        <h3 class="text-center">Chat Feed</h3>
+        <hr>
+
+        <div class="message-container" id="chat-feed">
+            {% for message in messages %}
+                <div class="message">
+                    <div class="user-info">
+                        <span class="badge {% if message.sender == user %}bg-primary{% else %}bg-secondary{% endif %}">
+                            {{ message.sender.username }}
+                        </span>
+                    </div>
+                    <p>{{ message.content }}</p>
+                    <small class="text-muted">{{ message.timestamp|date:"F j, Y, g:i a" }}</small>
+                </div>
+            {% endfor %}
+        </div>
+
+        <form method="post" id="message-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="message">Your Message:</label>
+                <textarea class="form-control" id="message" name="content" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="receiver">Choose User to Chat With:</label>
+                {{ form.receiver }}
+            </div>
+            <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+
+        <br>
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+           
+            $('#message-form').submit(function (e) {
+                e.preventDefault();
+
+                
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "chatfeed" %}',
+                    data: $('#message-form').serialize(),
+                    success: function (data) {
+                        
+                        $('#chat-feed').append(`
+                        <div class="message">
+                            <div class="user-info">
+                                <span class="badge {% if data.sender == user.username %}bg-primary{% else %}bg-secondary{% endif %}">
+                                    ${data.sender}
+                                </span>
+                            </div>
+                            <p>${data.content}</p>
+                            <small class="text-muted">${data.timestamp}</small>
+                        </div>
+                    `);
+
+                        
+                        $('#chat-feed').scrollTop($('#chat-feed')[0].scrollHeight);
+                        
+                        $('#message').val('');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

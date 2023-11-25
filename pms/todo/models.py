@@ -26,4 +26,9 @@ class Profile(models.Model):
     user = models.ForeignKey(User, max_length=10, on_delete=models.CASCADE, null=True)
     
     
-    
+class Message(models.Model):
+    content = models.TextField()
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_messages')
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='received_messages')
+    timestamp = models.DateTimeField(auto_now_add=True)
+

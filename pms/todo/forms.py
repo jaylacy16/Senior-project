@@ -6,7 +6,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.forms.widgets import PasswordInput, TextInput
 from django import forms
 from .models import Task, Profile
-
+from django import forms
+from .models import Message
 
 
         
@@ -49,9 +50,20 @@ class UpdateProfileForm(forms.ModelForm):
     class Meta:
          model = Profile
          fields = ['profile_pic',]
-      
 
 
+
+class SendMessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ['content', 'receiver']  
+
+    def __init__(self, *args, **kwargs):
+        sender = kwargs.pop('user', None)
+        super(SendMessageForm, self).__init__(*args, **kwargs)
+        if sender:
+           
+            self.fields['receiver'].queryset = User.objects.exclude(username=sender.username)
 
 
 

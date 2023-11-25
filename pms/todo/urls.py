@@ -1,5 +1,6 @@
-
 from django.urls import path
+
+from todo.forms import SendMessageForm
 
 from . import views
 
@@ -40,6 +41,10 @@ urlpatterns = [
     path('profile-management', views.profile_management, name="profile-management"),
    
     path('delete-account', views.deleteAccount, name="delete-account"),
+    
+    path('chatfeed/', views.chatfeed, name='chatfeed'),
+    
+    
 
 
     ]
